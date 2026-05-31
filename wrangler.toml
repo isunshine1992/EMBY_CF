@@ -9,5 +9,5 @@
     [[d1_databases]]
     binding = "DB"
     database_name = "emby-proxy-db"
-    database_id = "d4d06f0a-1490-46f5-931b-0d0db34e2f0c"
+    database_id = "5e646df8-b638-4352-bf6b-e8f1317e213f"
     EOF
