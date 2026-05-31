@@ -1,16 +1,13 @@
-name = "emby-proxy"
-main = "worker.js"
-compatibility_date = "2025-05-15"
+- name: 配置 wrangler.toml
+  run: |
+    cat > wrangler.toml << EOF
+    name = "${{ secrets.CF_WORKER_NAME }}"
+    main = "worker.js"
+    compatibility_date = "2024-01-01"
+    account_id = "${{ secrets.CF_ACCOUNT_ID }}"
 
-[vars]
-BASE_DOMAIN = "example.com"
-ADMIN_TOKEN = "liu1752256014"
-CF_API_TOKEN = ""
-CF_ZONE_ID = ""
-CF_ACCOUNT_ID = ""
-DNS_RECORD_NAME = "emby"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "emby-proxy-db"
-database_id = "d4d06f0a-1490-46f5-931b-0d0db34e2f0c"
+    [[d1_databases]]
+    binding = "DB"
+    database_name = "emby-proxy-db"
+    database_id = "d4d06f0a-1490-46f5-931b-0d0db34e2f0c"
+    EOF
