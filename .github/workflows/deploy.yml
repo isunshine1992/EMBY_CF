@@ -100,35 +100,6 @@ jobs:
 
       - name: 查看 Wrangler 版本
         run: wrangler --version
-
-      - name: 获取或创建 D1 数据库
-        id: get-db-id
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-        run: |
-          echo "🔍 尝试获取已有数据库 ID..."
-          LIST_RESPONSE=$(wrangler d1 list 2>&1)
-          echo "$LIST_RESPONSE"
-          DATABASE_ID=$(echo "$LIST_RESPONSE" | grep "emby-proxy-db" | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | head -1)
-
-          if [ -n "$DATABASE_ID" ]; then
-            echo "✅ 找到已有数据库 ID: $DATABASE_ID"
-            echo "DATABASE_ID=$DATABASE_ID" >> $GITHUB_OUTPUT
-          else
-            echo "📦 数据库不存在，正在创建..."
-            CREATE_RESPONSE=$(wrangler d1 create emby-proxy-db 2>&1)
-            echo "$CREATE_RESPONSE"
-            DATABASE_ID=$(echo "$CREATE_RESPONSE" | grep -oE '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' | head -1)
-            if [ -n "$DATABASE_ID" ]; then
-              echo "✅ 数据库创建成功，ID: $DATABASE_ID"
-              echo "DATABASE_ID=$DATABASE_ID" >> $GITHUB_OUTPUT
-            else
-              echo "⚠️ 未获取到数据库 ID，将使用默认配置"
-              echo "DATABASE_ID=" >> $GITHUB_OUTPUT
-            fi
-          fi
-
       - name: 配置 wrangler.toml
         run: |
           echo "⚙️ 配置 wrangler.toml..."
