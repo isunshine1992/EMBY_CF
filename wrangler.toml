@@ -13,4 +13,4 @@ DNS_RECORD_NAME = "emby"
 [[d1_databases]]
 binding = "DB"
 database_name = "emby-proxy-db"
-database_id = "276dc476-e5f5-4c64-91f1-792cdffbf2fa"
+database_id = "d4d06f0a-1490-46f5-931b-0d0db34e2f0c"
